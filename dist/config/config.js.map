@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/config/config.js"],"names":["serverSettings","port","process","env","PORT"],"mappings":";;;;;AAAA,IAAMA,iBAAiB;AACnBC,UAAMC,QAAQC,GAAR,CAAYC,IAAZ,IAAoB;AADP,CAAvB;;QAISJ,c,GAAAA,c","file":"config.js","sourcesContent":["const serverSettings = {\r\n    port: process.env.PORT || 3000\r\n};\r\n\r\nexport { serverSettings };"]}

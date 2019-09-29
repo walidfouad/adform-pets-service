@@ -4,7 +4,10 @@
     "description": "A microservice that (List Owners, Read/Write Pets, List Pets for an Owner and Log transaction to a file)",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "babel-node src/index.js",
+        "debug": "babel-node --inspect src/index.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "babel src -d dist --source-maps"
     },
     "repository": {
         "type": "git",
@@ -20,5 +23,16 @@
     "devDependencies": {
         "babel-cli": "^6.26.0",
         "babel-preset-env": "^1.7.0"
+    },
+    "dependencies": {
+        "apollo-server-express": "^2.9.4",
+        "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "express-graphql": "^0.9.0",
+        "graphql": "^14.5.8",
+        "graphql-tools": "^4.0.5",
+        "helmet": "^3.21.1",
+        "morgan": "^1.9.1"
     }
 }

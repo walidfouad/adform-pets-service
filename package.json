@@ -1,0 +1,24 @@
+{
+    "name": "adform-pets-service",
+    "version": "1.0.0",
+    "description": "A microservice that (List Owners, Read/Write Pets, List Pets for an Owner and Log transaction to a file)",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/walidfouad/adform-pets-service.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/walidfouad/adform-pets-service/issues"
+    },
+    "homepage": "https://github.com/walidfouad/adform-pets-service#readme",
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-preset-env": "^1.7.0"
+    }
+}

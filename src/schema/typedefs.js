@@ -10,33 +10,30 @@ const typeDefs = gql `
 		pets: [Pet]
 	}
 
-	enum PetType { CAT, DOG }
-
 	interface Pet {
 		id: ID!
-		type: PetType!
 		name: String!
 		colour: String!
 		age: Int!
 		breed: String
 	}
 
-	type cat implements Pet {
+	type Cat implements Pet {
 		id: ID!
-		type: PetType!
 		name: String!
 		colour: String!
 		age: Int!
 		breed: String
+		meowingVolume: Int
 	}
 
-	type dog implements Pet {
+	type Dog implements Pet {
 		id: ID!
-		type: PetType!
 		name: String!
 		colour: String!
 		age: Int!
 		breed: String
+		barkingVolume: Int
 	}
 
 	type Query {

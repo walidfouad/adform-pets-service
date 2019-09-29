@@ -1,6 +1,19 @@
 console.log('defining resolvers');
 
 const resolvers = {
+    Pet: {
+        __resolveType(pet, context, info) {
+            if (pet.meowingVolume) {
+                return 'Cat';
+            }
+
+            if (pet.barkingVolume) {
+                return 'Dog';
+            }
+
+            return null;
+        },
+    },
     Query: {
         getOwners: (root, args, context, info) => {
             return 'Hello world!';

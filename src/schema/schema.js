@@ -22,9 +22,6 @@ console.log('create schema');
 
 const schema = makeExecutableSchema({
     typeDefs,
-    resolvers,
-    resolverValidationOptions: {
-        requireResolversForResolveType: false
-    }
+    resolvers
 });
 export default schema;

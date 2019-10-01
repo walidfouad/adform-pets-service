@@ -4,29 +4,23 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _templateObject = _taggedTemplateLiteral(['\n  type Query {\n    hello: String\n  }\n'], ['\n  type Query {\n    hello: String\n  }\n']);
+var _graphqlTools = require('graphql-tools');
 
-var _apolloServerExpress = require('apollo-server-express');
+var _typedefs = require('./typedefs');
 
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+var _typedefs2 = _interopRequireDefault(_typedefs);
 
-// import typeDefs from './typedefs';
-// import resolvers from './resolvers';
-var typeDefs = (0, _apolloServerExpress.gql)(_templateObject);
+var _resolvers = require('./resolvers');
 
-var resolvers = {
-    Query: {
-        hello: function hello() {
-            return 'Hello world!';
-        }
-    }
-};
+var _resolvers2 = _interopRequireDefault(_resolvers);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 console.log('create schema');
-var schema = {
-    typeDefs: typeDefs,
-    resolvers: resolvers
-};
 
+var schema = (0, _graphqlTools.makeExecutableSchema)({
+    typeDefs: _typedefs2.default,
+    resolvers: _resolvers2.default
+});
 exports.default = schema;
 //# sourceMappingURL=schema.js.map

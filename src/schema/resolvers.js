@@ -3,11 +3,11 @@ console.log('defining resolvers');
 const resolvers = {
     Pet: {
         __resolveType(pet, context, info) {
-            if (pet.meowingVolume) {
+            if (pet.type === 'CAT') {
                 return 'Cat';
             }
 
-            if (pet.barkingVolume) {
+            if (pet.type === 'DOG') {
                 return 'Dog';
             }
 
@@ -21,21 +21,19 @@ const resolvers = {
         getPets: (root, args, context, info) => {
             return 'Hello world!';
         },
-        getOwnerPets: (root, { owner_id }, context, info) => {
+        getOwnerPets: (root, { ownerId }, context, info) => {
             return 'Hello world!';
         }
     },
     Mutation: {
         addPet: (root, {
-            name,
-            colour,
-            age,
-            breed
+            input
         }) => {
-            return 'Hello world!';
+            //TODO: add pet to database
+            return input;
         },
         updatePet: (root, {
-            pet_id,
+            petId,
             name,
             colour,
             age,

@@ -6,6 +6,19 @@ Object.defineProperty(exports, "__esModule", {
 console.log('defining resolvers');
 
 var resolvers = {
+    Pet: {
+        __resolveType: function __resolveType(pet, context, info) {
+            if (pet.type === 'CAT') {
+                return 'Cat';
+            }
+
+            if (pet.type === 'DOG') {
+                return 'Dog';
+            }
+
+            return null;
+        }
+    },
     Query: {
         getOwners: function getOwners(root, args, context, info) {
             return 'Hello world!';
@@ -14,22 +27,20 @@ var resolvers = {
             return 'Hello world!';
         },
         getOwnerPets: function getOwnerPets(root, _ref, context, info) {
-            var owner_id = _ref.owner_id;
+            var ownerId = _ref.ownerId;
 
             return 'Hello world!';
         }
     },
     Mutation: {
         addPet: function addPet(root, _ref2) {
-            var name = _ref2.name,
-                colour = _ref2.colour,
-                age = _ref2.age,
-                breed = _ref2.breed;
+            var input = _ref2.input;
 
-            return 'Hello world!';
+            //TODO: add pet to database
+            return input;
         },
         updatePet: function updatePet(root, _ref3) {
-            var pet_id = _ref3.pet_id,
+            var petId = _ref3.petId,
                 name = _ref3.name,
                 colour = _ref3.colour,
                 age = _ref3.age,

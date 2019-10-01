@@ -1,51 +1,83 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql `
+	
+	# --- INPUTS ---
+	input AddPetData {
+		type: PetType!
+		name: String!
+		colour: String!
+		age: Int!
+		breed: String
+		ownerId: ID
+	}
+
+	input UpdatePetData {
+		name: String
+		colour: String
+		age: Int
+		breed: String
+		ownerId: ID
+	}
+	
+	# --- ENUMS ---
+	enum PetType {
+		CAT
+		DOG
+	}
+
+	# --- INTERFACES ---
+	interface Pet {
+		id: ID!
+		type: PetType!
+		name: String!
+		colour: String!
+		age: Int!
+		breed: String
+		ownerId: ID
+	}
+	
+	# --- TYPES ---
+	type Cat implements Pet {
+		id: ID!
+		type: PetType!
+		name: String!
+		colour: String!
+		age: Int!
+		breed: String
+		ownerId: ID
+	}
+
+	type Dog implements Pet {
+		id: ID!
+		type: PetType!
+		name: String!
+		colour: String!
+		age: Int!
+		breed: String
+		ownerId: ID
+	}
+
 	type Owner {
 		id: ID!
 		name: String!
 		address: String!
 		phone: String
 		email: String!
-		pets: [Pet]
 	}
-
-	interface Pet {
-		id: ID!
-		name: String!
-		colour: String!
-		age: Int!
-		breed: String
-	}
-
-	type Cat implements Pet {
-		id: ID!
-		name: String!
-		colour: String!
-		age: Int!
-		breed: String
-		meowingVolume: Int
-	}
-
-	type Dog implements Pet {
-		id: ID!
-		name: String!
-		colour: String!
-		age: Int!
-		breed: String
-		barkingVolume: Int
-	}
-
+	
+	# --- QUERY ---
 	type Query {
 		getOwners: String,
 		getPets: String,
-		getOwnerPets(owner_id: ID!): String
+		getOwnerPets(ownerId: ID!): String
 		
 	}
 
+	# --- MUTATION ---
 	type Mutation {
-		addPet(name: String!, colour: String!, age: Int!, breed: String): String
-		updatePet(pet_id: ID!, name: String!, colour: String!, age: Int!, breed: String): String
+		addPet(input: AddPetData!): Pet
+		updatePet(petId: ID!, input: UpdatePetData!): String
 	  }
 `;
 

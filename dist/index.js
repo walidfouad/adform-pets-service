@@ -1,8 +1,8 @@
 'use strict';
 
-var _app = require('./server/app');
+var _server = require('./server/server');
 
-var _app2 = _interopRequireDefault(_app);
+var _server2 = _interopRequireDefault(_server);
 
 var _config = require('./config/config');
 
@@ -18,17 +18,12 @@ process.on('uncaughtRejection', function (err, promise) {
     console.error('Unhandled Rejection', err);
 });
 
-// const startServer = (port) => {
+var startServer = function startServer(port) {
 
-//     // console.log(JSON.stringify(app));
-//     //server.listen();
-
-
-//     // const server = app.listen(port, () => {
-//     //     console.log(`Server is running on port ${port}`);
-//     // });
-
-// };
+    _server2.default.listen({ port: port }, function () {
+        return console.log('\uD83D\uDE80 Server ready at http://localhost:' + port + _server.server.graphqlPath);
+    });
+};
 
 //console.log(app);
 

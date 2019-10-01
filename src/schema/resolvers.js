@@ -55,7 +55,7 @@ const resolvers = {
     Mutation: {
         addPet: (root, { input }, context, info) => {
             return new Promise((resolve, reject) => {
-                db.writeModel(input)
+                db.saveModel(input)
                     .then((model) => {
                         resolve(model);
                     }).catch((err) => {

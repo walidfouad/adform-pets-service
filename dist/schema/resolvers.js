@@ -12,13 +12,13 @@ var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _pets = require('../data/pets.db');
+var _dbmanager = require('../data/dbmanager');
 
-var _pets2 = _interopRequireDefault(_pets);
+var _dbmanager2 = _interopRequireDefault(_dbmanager);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var db = new _pets2.default();
+var db = new _dbmanager2.default();
 
 var resolvers = {
     Pet: {
@@ -70,11 +70,9 @@ var resolvers = {
         addPet: function addPet(root, _ref2, context, info) {
             var input = _ref2.input;
 
-            //TODO: add pet to database
             return new Promise(function (resolve, reject) {
-                db.writeModel(input).then(function (pets) {
-                    var filteredPets = _lodash2.default.filter(pets, { ownerId: ownerId });
-                    resolve(filteredPets);
+                db.saveModel(input).then(function (model) {
+                    resolve(model);
                 }).catch(function (err) {
                     reject(err);
                 });

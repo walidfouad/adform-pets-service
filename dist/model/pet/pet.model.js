@@ -9,10 +9,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Pet = function () {
-    function Pet(type, name, colour, age, breed, ownerId) {
+    function Pet(type, id, name, colour, age, breed, ownerId) {
         _classCallCheck(this, Pet);
 
         this.type = type;
+        this.id = id;
         this.name = name;
         this.colour = colour;
         this.age = age;
@@ -25,6 +26,7 @@ var Pet = function () {
         value: function toJSON() {
             return {
                 type: this.type,
+                id: this.id,
                 name: this.name,
                 colour: this.colour,
                 age: this.age,

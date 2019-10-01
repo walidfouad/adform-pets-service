@@ -19,13 +19,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Dog = function (_Pet) {
     _inherits(Dog, _Pet);
 
-    function Dog(name, colour, age) {
-        var breed = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
-        var ownerId = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+    function Dog(id, name, colour, age) {
+        var breed = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+        var ownerId = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
 
         _classCallCheck(this, Dog);
 
-        return _possibleConstructorReturn(this, (Dog.__proto__ || Object.getPrototypeOf(Dog)).call(this, 'DOG', name, colour, age, breed, ownerId));
+        return _possibleConstructorReturn(this, (Dog.__proto__ || Object.getPrototypeOf(Dog)).call(this, 'DOG', id, name, colour, age, breed, ownerId));
     }
 
     return Dog;

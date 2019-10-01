@@ -1,6 +1,7 @@
 export default class Owner {
-    constructor(name, address, phone, email) {
+    constructor(id, name, address, phone, email) {
         this.type = 'OWNER';
+        this.id = id;
         this.name = name;
         this.address = address;
         this.phone = phone;
@@ -14,6 +15,7 @@ export default class Owner {
     toJSON() {
         return {
             type: this.type,
+            id: this.id,
             name: this.name,
             address: this.address,
             phone: this.phone,

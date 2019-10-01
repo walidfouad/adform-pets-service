@@ -1,6 +1,7 @@
 export default class Pet {
-    constructor(type, name, colour, age, breed, ownerId) {
+    constructor(type, id, name, colour, age, breed, ownerId) {
         this.type = type;
+        this.id = id;
         this.name = name;
         this.colour = colour;
         this.age = age;
@@ -15,6 +16,7 @@ export default class Pet {
     toJSON() {
         return {
             type: this.type,
+            id: this.id,
             name: this.name,
             colour: this.colour,
             age: this.age,

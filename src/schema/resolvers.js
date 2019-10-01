@@ -1,4 +1,9 @@
-console.log('defining resolvers');
+import async from 'async';
+import _ from 'lodash';
+
+import PETSDB from '../data/dbmanager';
+
+const db = new PETSDB();
 
 const resolvers = {
     Pet: {
@@ -16,28 +21,51 @@ const resolvers = {
     },
     Query: {
         getOwners: (root, args, context, info) => {
-            return 'Hello world!';
+            return new Promise((resolve, reject) => {
+                db.readModels(['OWNER'])
+                    .then((owners) => {
+                        resolve(owners);
+                    }).catch((err) => {
+                        reject(err);
+                    });
+            });
         },
         getPets: (root, args, context, info) => {
-            return 'Hello world!';
+            return new Promise((resolve, reject) => {
+                db.readModels(['DOG', 'CAT'])
+                    .then((pets) => {
+                        resolve(pets);
+                    }).catch((err) => {
+                        reject(err);
+                    });
+            });
         },
         getOwnerPets: (root, { ownerId }, context, info) => {
-            return 'Hello world!';
+            return new Promise((resolve, reject) => {
+                db.readModels(['DOG', 'CAT'])
+                    .then((pets) => {
+                        const filteredPets = _.filter(pets, { ownerId: ownerId });
+                        resolve(filteredPets);
+                    }).catch((err) => {
+                        reject(err);
+                    });
+            });
         }
     },
     Mutation: {
-        addPet: (root, {
-            input
-        }) => {
-            //TODO: add pet to database
-            return input;
+        addPet: (root, { input }, context, info) => {
+            return new Promise((resolve, reject) => {
+                db.writeModel(input)
+                    .then((model) => {
+                        resolve(model);
+                    }).catch((err) => {
+                        reject(err);
+                    });
+            });
         },
         updatePet: (root, {
             petId,
-            name,
-            colour,
-            age,
-            breed
+            input
         }) => {
             return 'Hello world!';
         }

@@ -1,0 +1,33 @@
+[{
+        "id": "1",
+        "name": "Ahmed",
+        "address": "Malaysia",
+        "phone": "010342342343",
+        "email": "ahmed@gmail.com",
+        "type": "OWNER"
+    },
+    {
+        "id": "2",
+        "name": "Walid",
+        "address": "Malaysia",
+        "phone": "010342342343",
+        "email": "walid@gmail.com",
+        "type": "OWNER"
+    },
+    {
+        "id": "3",
+        "name": "Mohamed",
+        "address": "Malaysia",
+        "phone": "010342342343",
+        "email": "mohamed@gmail.com",
+        "type": "OWNER"
+    },
+    {
+        "id": "4",
+        "name": "Mohsen",
+        "address": "Malaysia",
+        "phone": "010342342343",
+        "email": "mohsen@gmail.com",
+        "type": "OWNER"
+    }
+]

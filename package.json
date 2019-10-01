@@ -6,7 +6,7 @@
     "scripts": {
         "start": "babel-node src/index.js",
         "debug": "babel-node --inspect src/index.js",
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "mocha test/*.test.js",
         "build": "babel src -d dist --source-maps"
     },
     "repository": {
@@ -22,10 +22,14 @@
     "homepage": "https://github.com/walidfouad/adform-pets-service#readme",
     "devDependencies": {
         "babel-cli": "^6.26.0",
-        "babel-preset-env": "^1.7.0"
+        "babel-preset-env": "^1.7.0",
+        "chai": "^4.2.0",
+        "mocha": "^6.2.1",
+        "supertest": "^4.0.2"
     },
     "dependencies": {
         "apollo-server-express": "^2.9.4",
+        "app-root-path": "^2.2.1",
         "async": "^3.1.0",
         "body-parser": "^1.19.0",
         "cors": "^2.8.5",
@@ -35,6 +39,8 @@
         "graphql": "^14.5.8",
         "graphql-tools": "^4.0.5",
         "helmet": "^3.21.1",
-        "morgan": "^1.9.1"
+        "lodash": "^4.17.15",
+        "morgan": "^1.9.1",
+        "uuid": "^3.3.3"
     }
 }

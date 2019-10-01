@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.pathJoin = exports.projectPath = exports.mdir = undefined;
+exports.appRoot = exports.pathJoin = exports.projectPath = exports.mkdir = undefined;
 
 var _fs = require('fs');
 
@@ -17,7 +17,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var appRoot = require('app-root-path');
 
-var mdir = function mdir(path) {
+var mkdir = function mkdir(path) {
+    return _fs2.default.existsSync(path) || _fs2.default.mkdirSync(path);
+};
+
+var joinAndMakeDirectory = function joinAndMakeDirectory(rootPath, dirName) {
+    var path = _path2.default.join(rootPath, dirName);
     return _fs2.default.existsSync(path) || _fs2.default.mkdirSync(path);
 };
 
@@ -29,7 +34,8 @@ var pathJoin = function pathJoin(path, dir) {
     return _path2.default.join(path, dir);
 };
 
-exports.mdir = mdir;
+exports.mkdir = mkdir;
 exports.projectPath = projectPath;
 exports.pathJoin = pathJoin;
+exports.appRoot = appRoot;
 //# sourceMappingURL=path.js.map

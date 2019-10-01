@@ -4,10 +4,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _async = require('async');
-
-var _async2 = _interopRequireDefault(_async);
-
 var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
@@ -22,6 +18,7 @@ var db = new _dbmanager2.default();
 
 var resolvers = {
     Pet: {
+        // this is added to resolve interface issue (decide which child type to resolve)
         __resolveType: function __resolveType(pet, context, info) {
             if (pet.type === 'CAT') {
                 return 'Cat';
@@ -71,7 +68,15 @@ var resolvers = {
             var input = _ref2.input;
 
             return new Promise(function (resolve, reject) {
-                db.saveModel(input).then(function (model) {
+                if (input.ownerId) {
+                    var owners = db.getOwners();
+                    var owner = _lodash2.default.find(owners, { id: input.ownerId });
+                    if (!owner) {
+                        return reject(new Error('Owner Id does not exist'));
+                    }
+                }
+
+                db.createNewModel(input).then(function (model) {
                     resolve(model);
                 }).catch(function (err) {
                     reject(err);
@@ -82,7 +87,33 @@ var resolvers = {
             var petId = _ref3.petId,
                 input = _ref3.input;
 
-            return 'Hello world!';
+            return new Promise(function (resolve, reject) {
+                if (input.ownerId) {
+                    var owners = db.getOwners();
+                    var owner = _lodash2.default.find(owners, { id: input.ownerId });
+                    if (!owner) {
+                        return reject(new Error('Owner Id does not exist'));
+                    }
+                }
+
+                var dogs = db.getDogs();
+                var dog = _lodash2.default.find(dogs, { id: petId });
+
+                var cats = db.getCats();
+                var cat = _lodash2.default.find(cats, { id: petId });
+
+                if (!dog && !cat) {
+                    return reject(new Error('Pet Id does not exist'));
+                }
+
+                input.type = dog ? 'DOG' : 'CAT';
+
+                db.updateModel(petId, input).then(function (model) {
+                    resolve(model);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
         }
     }
 

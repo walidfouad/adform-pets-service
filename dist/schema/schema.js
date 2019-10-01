@@ -22,5 +22,6 @@ var schema = (0, _graphqlTools.makeExecutableSchema)({
     typeDefs: _typedefs2.default,
     resolvers: _resolvers2.default
 });
+
 exports.default = schema;
 //# sourceMappingURL=schema.js.map

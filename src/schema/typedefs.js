@@ -68,16 +68,16 @@ const typeDefs = gql `
 	
 	# --- QUERY ---
 	type Query {
-		getOwners: [Owner],
-		getPets: [Pet],
-		getOwnerPets(ownerId: ID!): [Pet]
+		getOwners: [Owner!],
+		getPets: [Pet!],
+		getOwnerPets(ownerId: ID!): [Pet!]
 		
 	}
 
 	# --- MUTATION ---
 	type Mutation {
-		addPet(input: AddPetData!): Pet
-		updatePet(petId: ID!, input: UpdatePetData!): Pet
+		addPet(input: AddPetData!): Pet!
+		updatePet(petId: ID!, input: UpdatePetData!): Pet!
 	  }
 `;
 

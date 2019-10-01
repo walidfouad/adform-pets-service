@@ -1,8 +1,8 @@
+import async from 'async';
+
 import Owner from '../model/owner/owner.model';
 import Dog from '../model/pet/dog.model';
 import Cat from '../model/pet/cat.model';
-
-import async from 'async';
 
 const formatDataRow = (dataRow) => {
     let fDataRow = {};

@@ -5,6 +5,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.formatDataRow = undefined;
 
+var _async = require('async');
+
+var _async2 = _interopRequireDefault(_async);
+
 var _owner = require('../model/owner/owner.model');
 
 var _owner2 = _interopRequireDefault(_owner);
@@ -16,10 +20,6 @@ var _dog2 = _interopRequireDefault(_dog);
 var _cat = require('../model/pet/cat.model');
 
 var _cat2 = _interopRequireDefault(_cat);
-
-var _async = require('async');
-
-var _async2 = _interopRequireDefault(_async);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

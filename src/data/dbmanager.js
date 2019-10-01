@@ -1,42 +1,16 @@
-import { mdir, projectPath, pathJoin } from '../utils/path';
+import appRoot from 'app-root-path';
 import uuidv4 from 'uuid/v4';
-import Owner from '../model/owner/owner.model';
-import Dog from '../model/pet/dog.model';
-import Cat from '../model/pet/cat.model';
+import path from 'path';
+import _ from 'lodash';
+import fs from 'fs';
 
 import formatData, { formatDataRow } from './dataformat';
 
-import fs from 'fs';
-import { load } from 'protobufjs';
+const dbDirectory = path.join(appRoot.path, 'json_data');
 
-const dbDirectory = projectPath('json_data');
+export default class DBManager {
 
-export default class DbManager {
-
-    constructor() {
-        this.data = {};
-    }
-
-    readData() {
-        return new Promise((resolve, reject) => {
-            // read all json db files
-            // here should update data from json files 
-
-
-            resolve(this.data);
-        });
-    }
-
-    writeData() {
-        return new Promise((resolve, reject) => {
-            // ensure db directory exists
-            mdir(dbDirectory);
-            // steps to save
-
-            resolve(this.data);
-        });
-
-    }
+    constructor() {}
 
     readModels(modelTypes) {
         return new Promise((resolve, reject) => {
@@ -56,11 +30,12 @@ export default class DbManager {
 
     }
 
-    saveModel(inputData) {
+    createNewModel(inputData) {
         return new Promise((resolve, reject) => {
             const modelType = inputData.type.toLowerCase();
             const id = uuidv4();
             inputData.id = id;
+
             const newModel = formatDataRow(inputData);
 
             let modelData = this.loadModelFile(modelType);
@@ -71,26 +46,56 @@ export default class DbManager {
             // here write to model file in json db directory
             this.writeModelFile(modelType, modelData);
 
+            resolve(newModel);
+        });
+    }
+
+    updateModel(modelId, inputData) {
+        return new Promise((resolve, reject) => {
+            const modelType = inputData.type.toLowerCase();
+
+            inputData.id = modelId;
+
+            const newModel = formatDataRow(inputData);
+
+            let modelData = this.loadModelFile(modelType);
+
+            const oldModelIndex = _.findIndex(modelData, { id: modelId });
+            // Now insert the new record into modelData array
+            modelData[oldModelIndex] = newModel;
+
+            // here write to model file in json db directory
+            this.writeModelFile(modelType, modelData);
 
             resolve(newModel);
         });
     }
 
+
     getOwners() {
-        return loadModel('OWNER');
+        return this.loadModelFile('OWNER');
     }
 
     getDogs() {
-        return loadModel('DOG');
+        return this.loadModelFile('DOG');
     }
 
     getCats() {
-        return loadModel('CAT');
+        return this.loadModelFile('CAT');
+    }
+
+    getPets() {
+        const dogs = this.getDogs();
+        const cats = this.getCats();
+        let pets = [];
+        pets = dogs.concat(cats);
+
+        return pets;
     }
 
     loadModelFile(modelType) {
 
-        const modelFilePath = pathJoin(dbDirectory, modelType) + '.json';
+        const modelFilePath = path.join(dbDirectory, modelType) + '.json';
         if (!fs.existsSync(modelFilePath)) {
             return [];
         }
@@ -103,7 +108,7 @@ export default class DbManager {
     }
 
     writeModelFile(modelType, modelData) {
-        const modelFilePath = pathJoin(dbDirectory, modelType) + '.json';
+        const modelFilePath = path.join(dbDirectory, modelType) + '.json';
         fs.writeFileSync(modelFilePath, JSON.stringify(modelData));
     }
 }

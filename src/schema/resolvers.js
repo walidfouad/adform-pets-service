@@ -72,6 +72,9 @@ const resolvers = {
                 // get owner and then update its pets
                 db.readSpecificModel(ownerId, 'OWNER')
                     .then((owner) => {
+                        if (!owner) {
+                            return reject('Owner specified does not exist.');
+                        }
                         // update owner pets. Please note owner.pets already empty, as it is not stored in db.
                         owner.pets = db.ownerPets(ownerId);
                         resolve(owner);

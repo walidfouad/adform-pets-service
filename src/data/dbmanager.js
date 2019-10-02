@@ -112,7 +112,7 @@ export default class DBManager {
             // here write to model file in json db directory
             this.writeModelFile(modelType, modelData);
 
-            resolve(newModel);
+            resolve(oldModel);
         });
     }
 

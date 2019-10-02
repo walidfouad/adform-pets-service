@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express');
+import { gql } from 'apollo-server-express';
 
 /**
  * Below is the Graph Query Language (gql). Used to better and easily define our schema types, queries and mutations

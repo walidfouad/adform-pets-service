@@ -15,7 +15,6 @@ export default class Owner {
         return this.type;
     }
 
-
     /**
      * Converting Object to JSON
      */
@@ -29,5 +28,4 @@ export default class Owner {
             email: this.email
         };
     }
-
 }

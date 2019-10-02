@@ -25,12 +25,10 @@ app.use((err, req, res, next) => {
     res.status(500).send("REQUEST ERROR");
 });
 
-
 // initiate a new Apollo server with schema definitions and resolvers
 const server = new ApolloServer({ schema });
 // it defaults to path '/graphql'
 server.applyMiddleware({ app });
-
 
 export { server };
 export default app;

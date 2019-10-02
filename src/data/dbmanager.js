@@ -37,7 +37,6 @@ export default class DBManager {
 
             resolve(result);
         });
-
     }
 
     /**
@@ -56,7 +55,6 @@ export default class DBManager {
 
             resolve(aModel);
         });
-
     }
 
     /**
@@ -70,10 +68,10 @@ export default class DBManager {
             inputData.id = id;
 
             const newModel = formatDataRow(inputData);
-
+            // loading model data from json file
             let modelData = this.loadModelFile(modelType);
 
-            // Now insert the new record into modelData array
+            // now insert the new record into modelData array
             modelData.push(newModel);
 
             // here write to model file in json db directory
@@ -117,7 +115,7 @@ export default class DBManager {
     }
 
     /**
-     * Loads Model data from file system
+     * Loads Model data from a json file system
      * @param {enum} modelType - carries model type "OWNER", "CAT" or "DOG"
      */
     loadModelFile(modelType) {
@@ -128,7 +126,6 @@ export default class DBManager {
         }
 
         const modelBuffer = fs.readFileSync(modelFilePath);
-
         const modelData = (modelBuffer && modelBuffer.length > 0) ? JSON.parse(modelBuffer) : [];
 
         return modelData;

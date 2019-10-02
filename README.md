@@ -4,6 +4,7 @@ A microservice that (List Owners, Read/Write Pets, List Pets for an Owner and Lo
 
 # run with npm
 npm run start
+npm start
 
 
 # Docker Build

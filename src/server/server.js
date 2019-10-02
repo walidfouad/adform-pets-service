@@ -1,12 +1,10 @@
-import { ApolloServer } from 'apollo-server-express';
-import express from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
-import morgan from 'morgan';
-
 import logger, { accessLogStream } from '../utils/logger';
-
+import { ApolloServer } from 'apollo-server-express';
 import schema from '../schema/schema';
+import express from 'express';
+import morgan from 'morgan';
+import helmet from 'helmet';
+import cors from 'cors';
 
 const app = express();
 
@@ -28,8 +26,7 @@ app.use((err, req, res, next) => {
 });
 
 
-// initiate a new apollo server with schema definitions and resolvers
-
+// initiate a new Apollo server with schema definitions and resolvers
 const server = new ApolloServer({ schema });
 // it defaults to path '/graphql'
 server.applyMiddleware({ app });

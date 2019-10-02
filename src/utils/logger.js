@@ -3,7 +3,9 @@ import winston from 'winston';
 import path from 'path';
 import fs from 'fs';
 
-
+/**
+ * Creates different types of logging (info, error and console in case of developement environment)
+ */
 const logger = winston.createLogger({
     level: 'info',
     format: winston.format.json(),

@@ -1,10 +1,9 @@
+import formatData, { formatDataRow } from './dataformat';
 import appRoot from 'app-root-path';
 import uuidv4 from 'uuid/v4';
 import path from 'path';
 import _ from 'lodash';
 import fs from 'fs';
-
-import formatData, { formatDataRow } from './dataformat';
 
 const dbDirectory = path.join(appRoot.path, 'json_data');
 

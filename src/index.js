@@ -1,18 +1,18 @@
-import logger from './utils/logger';
-
-global.logger = logger;
-
 import app, { server } from './server/server';
 import { serverSettings } from './config/config';
+import logger from './utils/logger';
+global.logger = logger;
 
+// *** Unhandled Exceptions ***
 process.on('uncaughtException', (err) => {
-    logger.error('Unhandled Exception', err);
+    logger.error('There was an uncaught error', err);
+    process.exit(1);
 });
 
-process.on('uncaughtRejection', (err, promise) => {
-    logger.error('uncaughtRejection', err);
-});
-
+/**
+ * Runing server and listening on specified port
+ * @param {number} port
+ */
 const startServer = (port) => {
 
     app.listen({ port }, () => {
@@ -25,4 +25,5 @@ if (!serverSettings.port) {
     process.exit(9);
 }
 
+// *** START SERVER (LISTENING) ***
 startServer(serverSettings.port);

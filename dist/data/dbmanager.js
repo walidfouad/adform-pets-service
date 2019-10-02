@@ -48,8 +48,9 @@ var DBManager = function () {
 
             return new Promise(function (resolve, reject) {
                 if (!modelTypes || modelTypes.length === 0) {
-                    return reject(new Error('No modelType provided.'));
+                    return reject(new Error('No model Types provided.'));
                 }
+
                 var result = [];
                 modelTypes.forEach(function (modelType) {
                     if (modelType && modelType !== '') {
@@ -62,9 +63,25 @@ var DBManager = function () {
             });
         }
     }, {
+        key: 'readSpecificModel',
+        value: function readSpecificModel(modelId, modelType) {
+            var _this2 = this;
+
+            return new Promise(function (resolve, reject) {
+                if (!modelType || modelType.length === 0) {
+                    return reject(new Error('No model Type provided.'));
+                }
+
+                var modelData = _this2.loadModelFile(modelType.toLowerCase());
+                var aModel = _lodash2.default.find(modelData, { id: modelId });
+
+                resolve(aModel);
+            });
+        }
+    }, {
         key: 'createNewModel',
         value: function createNewModel(inputData) {
-            var _this2 = this;
+            var _this3 = this;
 
             return new Promise(function (resolve, reject) {
                 var modelType = inputData.type.toLowerCase();
@@ -73,13 +90,13 @@ var DBManager = function () {
 
                 var newModel = (0, _dataformat.formatDataRow)(inputData);
 
-                var modelData = _this2.loadModelFile(modelType);
+                var modelData = _this3.loadModelFile(modelType);
 
                 // Now insert the new record into modelData array
                 modelData.push(newModel);
 
                 // here write to model file in json db directory
-                _this2.writeModelFile(modelType, modelData);
+                _this3.writeModelFile(modelType, modelData);
 
                 resolve(newModel);
             });
@@ -87,7 +104,7 @@ var DBManager = function () {
     }, {
         key: 'updateModel',
         value: function updateModel(modelId, inputData) {
-            var _this3 = this;
+            var _this4 = this;
 
             return new Promise(function (resolve, reject) {
                 var modelType = inputData.type.toLowerCase();
@@ -96,17 +113,38 @@ var DBManager = function () {
 
                 var newModel = (0, _dataformat.formatDataRow)(inputData);
 
-                var modelData = _this3.loadModelFile(modelType);
+                var modelData = _this4.loadModelFile(modelType);
 
                 var oldModelIndex = _lodash2.default.findIndex(modelData, { id: modelId });
                 // Now insert the new record into modelData array
                 modelData[oldModelIndex] = newModel;
 
                 // here write to model file in json db directory
-                _this3.writeModelFile(modelType, modelData);
+                _this4.writeModelFile(modelType, modelData);
 
                 resolve(newModel);
             });
+        }
+    }, {
+        key: 'loadModelFile',
+        value: function loadModelFile(modelType) {
+
+            var modelFilePath = _path2.default.join(dbDirectory, modelType) + '.json';
+            if (!_fs2.default.existsSync(modelFilePath)) {
+                return [];
+            }
+
+            var modelBuffer = _fs2.default.readFileSync(modelFilePath);
+
+            var modelData = modelBuffer && modelBuffer.length > 0 ? JSON.parse(modelBuffer) : [];
+
+            return modelData;
+        }
+    }, {
+        key: 'writeModelFile',
+        value: function writeModelFile(modelType, modelData) {
+            var modelFilePath = _path2.default.join(dbDirectory, modelType) + '.json';
+            _fs2.default.writeFileSync(modelFilePath, JSON.stringify(modelData));
         }
     }, {
         key: 'getOwners',
@@ -134,25 +172,20 @@ var DBManager = function () {
             return pets;
         }
     }, {
-        key: 'loadModelFile',
-        value: function loadModelFile(modelType) {
+        key: 'ownerPets',
+        value: function ownerPets(oId) {
+            var pets = this.getPets();
+            var fPets = _lodash2.default.filter(pets, { ownerId: oId });
 
-            var modelFilePath = _path2.default.join(dbDirectory, modelType) + '.json';
-            if (!_fs2.default.existsSync(modelFilePath)) {
-                return [];
-            }
-
-            var modelBuffer = _fs2.default.readFileSync(modelFilePath);
-
-            var modelData = modelBuffer && modelBuffer.length > 0 ? JSON.parse(modelBuffer) : [];
-
-            return modelData;
+            return fPets;
         }
     }, {
-        key: 'writeModelFile',
-        value: function writeModelFile(modelType, modelData) {
-            var modelFilePath = _path2.default.join(dbDirectory, modelType) + '.json';
-            _fs2.default.writeFileSync(modelFilePath, JSON.stringify(modelData));
+        key: 'getOwner',
+        value: function getOwner(oId) {
+            var owners = this.getOwners();
+            var owner = _lodash2.default.find(owners, { id: oId });
+
+            return owner;
         }
     }]);
 

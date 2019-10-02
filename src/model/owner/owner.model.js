@@ -1,11 +1,12 @@
 export default class Owner {
-    constructor(id, name, address, phone, email) {
+    constructor(id, name, address, email, phone = null, pets = null) {
         this.type = 'OWNER';
         this.id = id;
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.email = email;
+        this.pets = pets;
     }
 
     get Type() {
@@ -19,7 +20,8 @@ export default class Owner {
             name: this.name,
             address: this.address,
             phone: this.phone,
-            email: this.email
+            email: this.email,
+            pets: this.pets
         };
     }
 

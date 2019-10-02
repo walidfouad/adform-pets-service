@@ -34,7 +34,7 @@ const typeDefs = gql `
 		colour: String!
 		age: Int!
 		breed: String
-		ownerId: ID
+		owner: Owner
 	}
 	
 	# --- TYPES ---
@@ -45,7 +45,7 @@ const typeDefs = gql `
 		colour: String!
 		age: Int!
 		breed: String
-		ownerId: ID
+		owner: Owner
 	}
 
 	type Dog implements Pet {
@@ -55,7 +55,7 @@ const typeDefs = gql `
 		colour: String!
 		age: Int!
 		breed: String
-		ownerId: ID
+		owner: Owner
 	}
 
 	type Owner {
@@ -64,13 +64,14 @@ const typeDefs = gql `
 		address: String!
 		phone: String
 		email: String!
+		pets: [Pet!]
 	}
 	
 	# --- QUERY ---
 	type Query {
 		getOwners: [Owner!],
 		getPets: [Pet!],
-		getOwnerPets(ownerId: ID!): [Pet!]
+		getOwnerPets(ownerId: ID!): Owner
 		
 	}
 

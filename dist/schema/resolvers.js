@@ -35,7 +35,14 @@ var resolvers = {
         getOwners: function getOwners(root, args, context, info) {
             return new Promise(function (resolve, reject) {
                 db.readModels(['OWNER']).then(function (owners) {
-                    resolve(owners);
+
+                    var ownerWithPets = [];
+                    owners.forEach(function (owner) {
+                        owner.pets = db.ownerPets(owner.id);
+                        ownerWithPets.push(owner);
+                    });
+
+                    resolve(ownerWithPets);
                 }).catch(function (err) {
                     reject(err);
                 });
@@ -44,7 +51,13 @@ var resolvers = {
         getPets: function getPets(root, args, context, info) {
             return new Promise(function (resolve, reject) {
                 db.readModels(['DOG', 'CAT']).then(function (pets) {
-                    resolve(pets);
+                    var petsWithOwners = [];
+                    pets.forEach(function (pet) {
+                        pet.owner = db.getOwner(pet.ownerId);
+                        petsWithOwners.push(pet);
+                    });
+
+                    resolve(petsWithOwners);
                 }).catch(function (err) {
                     reject(err);
                 });
@@ -54,9 +67,9 @@ var resolvers = {
             var ownerId = _ref.ownerId;
 
             return new Promise(function (resolve, reject) {
-                db.readModels(['DOG', 'CAT']).then(function (pets) {
-                    var filteredPets = _lodash2.default.filter(pets, { ownerId: ownerId });
-                    resolve(filteredPets);
+                db.readSpecificModel(ownerId, 'OWNER').then(function (owner) {
+                    owner.pets = db.ownerPets(ownerId);
+                    resolve(owner);
                 }).catch(function (err) {
                     reject(err);
                 });

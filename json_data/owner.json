@@ -4,15 +4,17 @@
         "address": "Malaysia",
         "phone": "010342342343",
         "email": "ahmed@gmail.com",
-        "type": "OWNER"
+        "type": "OWNER",
+        "pets": null
     },
     {
         "id": "2",
         "name": "Walid",
         "address": "Egypt",
-        "phone": "010342342343",
+        "phone": null,
         "email": "walid@gmail.com",
-        "type": "OWNER"
+        "type": "OWNER",
+        "pets": null
     },
     {
         "id": "3",
@@ -20,7 +22,8 @@
         "address": "Malaysia",
         "phone": "010342342343",
         "email": "mohamed@gmail.com",
-        "type": "OWNER"
+        "type": "OWNER",
+        "pets": null
     },
     {
         "id": "4",
@@ -28,6 +31,7 @@
         "address": "Malaysia",
         "phone": "010342342343",
         "email": "mohsen@gmail.com",
-        "type": "OWNER"
+        "type": "OWNER",
+        "pets": null
     }
 ]

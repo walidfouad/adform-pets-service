@@ -16,14 +16,21 @@ const resolvers = {
             }
 
             return null;
-        },
+        }
     },
     Query: {
         getOwners: (root, args, context, info) => {
             return new Promise((resolve, reject) => {
                 db.readModels(['OWNER'])
                     .then((owners) => {
-                        resolve(owners);
+
+                        let ownerWithPets = [];
+                        owners.forEach(owner => {
+                            owner.pets = db.ownerPets(owner.id);
+                            ownerWithPets.push(owner);
+                        });
+
+                        resolve(ownerWithPets);
                     }).catch((err) => {
                         reject(err);
                     });
@@ -33,7 +40,13 @@ const resolvers = {
             return new Promise((resolve, reject) => {
                 db.readModels(['DOG', 'CAT'])
                     .then((pets) => {
-                        resolve(pets);
+                        let petsWithOwners = [];
+                        pets.forEach(pet => {
+                            pet.owner = db.getOwner(pet.ownerId);
+                            petsWithOwners.push(pet);
+                        });
+
+                        resolve(petsWithOwners);
                     }).catch((err) => {
                         reject(err);
                     });
@@ -41,10 +54,11 @@ const resolvers = {
         },
         getOwnerPets: (root, { ownerId }, context, info) => {
             return new Promise((resolve, reject) => {
-                db.readModels(['DOG', 'CAT'])
-                    .then((pets) => {
-                        const filteredPets = _.filter(pets, { ownerId: ownerId });
-                        resolve(filteredPets);
+                db.readSpecificModel(ownerId, 'OWNER')
+                    .then((owner) => {
+                        owner.pets = db.ownerPets(ownerId);
+                        resolve(owner);
+
                     }).catch((err) => {
                         reject(err);
                     });

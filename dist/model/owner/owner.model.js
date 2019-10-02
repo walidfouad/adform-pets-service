@@ -9,7 +9,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Owner = function () {
-    function Owner(id, name, address, phone, email) {
+    function Owner(id, name, address, email) {
+        var phone = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+        var pets = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
+
         _classCallCheck(this, Owner);
 
         this.type = 'OWNER';
@@ -18,6 +21,7 @@ var Owner = function () {
         this.address = address;
         this.phone = phone;
         this.email = email;
+        this.pets = pets;
     }
 
     _createClass(Owner, [{
@@ -29,7 +33,8 @@ var Owner = function () {
                 name: this.name,
                 address: this.address,
                 phone: this.phone,
-                email: this.email
+                email: this.email,
+                pets: this.pets
             };
         }
     }, {

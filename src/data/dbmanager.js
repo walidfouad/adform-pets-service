@@ -15,8 +15,9 @@ export default class DBManager {
     readModels(modelTypes) {
         return new Promise((resolve, reject) => {
             if (!modelTypes || modelTypes.length === 0) {
-                return reject(new Error('No modelType provided.'));
+                return reject(new Error('No model Types provided.'));
             }
+
             let result = [];
             modelTypes.forEach((modelType) => {
                 if (modelType && modelType !== '') {
@@ -26,6 +27,20 @@ export default class DBManager {
             });
 
             resolve(result);
+        });
+
+    }
+
+    readSpecificModel(modelId, modelType) {
+        return new Promise((resolve, reject) => {
+            if (!modelType || modelType.length === 0) {
+                return reject(new Error('No model Type provided.'));
+            }
+
+            const modelData = this.loadModelFile(modelType.toLowerCase());
+            const aModel = _.find(modelData, { id: modelId });
+
+            resolve(aModel);
         });
 
     }
@@ -71,6 +86,24 @@ export default class DBManager {
         });
     }
 
+    loadModelFile(modelType) {
+
+        const modelFilePath = path.join(dbDirectory, modelType) + '.json';
+        if (!fs.existsSync(modelFilePath)) {
+            return [];
+        }
+
+        const modelBuffer = fs.readFileSync(modelFilePath);
+
+        const modelData = (modelBuffer && modelBuffer.length > 0) ? JSON.parse(modelBuffer) : [];
+
+        return modelData;
+    }
+
+    writeModelFile(modelType, modelData) {
+        const modelFilePath = path.join(dbDirectory, modelType) + '.json';
+        fs.writeFileSync(modelFilePath, JSON.stringify(modelData));
+    }
 
     getOwners() {
         return this.loadModelFile('OWNER');
@@ -93,22 +126,17 @@ export default class DBManager {
         return pets;
     }
 
-    loadModelFile(modelType) {
+    ownerPets(oId) {
+        const pets = this.getPets();
+        const fPets = _.filter(pets, { ownerId: oId });
 
-        const modelFilePath = path.join(dbDirectory, modelType) + '.json';
-        if (!fs.existsSync(modelFilePath)) {
-            return [];
-        }
-
-        const modelBuffer = fs.readFileSync(modelFilePath);
-
-        const modelData = (modelBuffer && modelBuffer.length > 0) ? JSON.parse(modelBuffer) : [];
-
-        return modelData;
+        return fPets;
     }
 
-    writeModelFile(modelType, modelData) {
-        const modelFilePath = path.join(dbDirectory, modelType) + '.json';
-        fs.writeFileSync(modelFilePath, JSON.stringify(modelData));
+    getOwner(oId) {
+        const owners = this.getOwners();
+        const owner = _.find(owners, { id: oId });
+
+        return owner;
     }
 }

@@ -36,6 +36,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var dbDirectory = _path2.default.join(_appRootPath2.default.path, 'json_data');
 
+/**
+ * 
+ */
+
 var DBManager = function () {
     function DBManager() {
         _classCallCheck(this, DBManager);
@@ -117,8 +121,36 @@ var DBManager = function () {
 
                 var oldModelIndex = _lodash2.default.findIndex(modelData, { id: modelId });
                 // Now insert the new record into modelData array
-                modelData[oldModelIndex] = newModel;
+                var oldModel = modelData[oldModelIndex];
+                var keys = Object.keys(oldModel);
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
 
+                try {
+                    for (var _iterator = keys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        var key = _step.value;
+
+                        if (newModel[key]) {
+                            oldModel[key] = newModel[key];
+                        }
+                    }
+                } catch (err) {
+                    _didIteratorError = true;
+                    _iteratorError = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion && _iterator.return) {
+                            _iterator.return();
+                        }
+                    } finally {
+                        if (_didIteratorError) {
+                            throw _iteratorError;
+                        }
+                    }
+                }
+
+                modelData[oldModelIndex] = oldModel;
                 // here write to model file in json db directory
                 _this4.writeModelFile(modelType, modelData);
 
@@ -186,6 +218,22 @@ var DBManager = function () {
             var owner = _lodash2.default.find(owners, { id: oId });
 
             return owner;
+        }
+    }, {
+        key: 'getOwnerByEmail',
+        value: function getOwnerByEmail(oEmail) {
+            var owners = this.getOwners();
+            var owner = _lodash2.default.find(owners, { email: oEmail });
+
+            return owner;
+        }
+    }, {
+        key: 'getPet',
+        value: function getPet(input) {
+            var pets = this.getPets();
+            var pet = _lodash2.default.find(pets, input);
+
+            return pet;
         }
     }]);
 

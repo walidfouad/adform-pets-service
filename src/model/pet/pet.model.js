@@ -1,3 +1,6 @@
+/**
+ * Interface representing a base Model for Pets
+ */
 export default class Pet {
     constructor(type, id, name, colour, age, breed, ownerId) {
         this.type = type;
@@ -13,6 +16,9 @@ export default class Pet {
         return this.type;
     }
 
+    /**
+     * Converting Object to JSON
+     */
     toJSON() {
         return {
             type: this.type,

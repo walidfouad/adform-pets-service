@@ -1,4 +1,5 @@
 import logger from './utils/logger';
+
 global.logger = logger;
 
 import app, { server } from './server/server';

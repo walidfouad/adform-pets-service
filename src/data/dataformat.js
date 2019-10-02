@@ -4,12 +4,15 @@ import Owner from '../model/owner/owner.model';
 import Dog from '../model/pet/dog.model';
 import Cat from '../model/pet/cat.model';
 
+/**
+ * formats model data and creates instance according to its type
+ * @param {object} dataRow - carries model field data
+ */
 const formatDataRow = (dataRow) => {
     let fDataRow = {};
 
     if (!dataRow.type) {
-        console.log('MISSING FILED. Data row does not include a type.');
-
+        logger.error('MISSING FIELD', 'Some records in database missing model type');
         return fDataRow;
     }
 
@@ -18,8 +21,8 @@ const formatDataRow = (dataRow) => {
             fDataRow = new Owner(dataRow.id,
                 dataRow.name,
                 dataRow.address,
-                dataRow.phone,
-                dataRow.email);
+                dataRow.email,
+                dataRow.phone);
             break;
         case 'dog':
             fDataRow = new Dog(dataRow.id,
@@ -42,10 +45,15 @@ const formatDataRow = (dataRow) => {
 
     }
 
+    // verify it is finally converted to json format
     return fDataRow.toJSON();
 };
 
-
+/**
+ * formats models data and creates instances according to its type
+ * this could be extended to allow for sorting and different kinds of formatting
+ * @param {array} modelDataArray - an array of models
+ */
 const formatData = (modelDataArray) => {
 
     let formatedDataArray = [];

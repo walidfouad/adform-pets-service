@@ -1,5 +1,8 @@
 const { gql } = require('apollo-server-express');
 
+/**
+ * Below is the Graph Query Language (gql). Used to better and easily define our schema types, queries and mutations
+ */
 const typeDefs = gql `
 	
 	# --- INPUTS ---
@@ -20,6 +23,13 @@ const typeDefs = gql `
 		ownerId: ID
 	}
 	
+	input AddOwnerData {
+		name: String!
+		address: String!
+		phone: String
+		email: String!
+	}
+
 	# --- ENUMS ---
 	enum PetType {
 		CAT
@@ -77,8 +87,9 @@ const typeDefs = gql `
 
 	# --- MUTATION ---
 	type Mutation {
-		addPet(input: AddPetData!): Pet!
-		updatePet(petId: ID!, input: UpdatePetData!): Pet!
+		addPet(input: AddPetData!): String
+		updatePet(petId: ID!, input: UpdatePetData!): Pet
+		addOwner(input: AddOwnerData!): String
 	  }
 `;
 

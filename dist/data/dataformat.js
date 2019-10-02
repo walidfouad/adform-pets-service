@@ -23,18 +23,21 @@ var _cat2 = _interopRequireDefault(_cat);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * formats model data and creates instance according to its type
+ * @param {object} dataRow - carries model field data
+ */
 var formatDataRow = function formatDataRow(dataRow) {
     var fDataRow = {};
 
     if (!dataRow.type) {
-        console.log('MISSING FILED. Data row does not include a type.');
-
+        logger.error('MISSING FIELD', 'Some records in database missing model type');
         return fDataRow;
     }
 
     switch (dataRow.type.toLowerCase()) {
         case 'owner':
-            fDataRow = new _owner2.default(dataRow.id, dataRow.name, dataRow.address, dataRow.phone, dataRow.email);
+            fDataRow = new _owner2.default(dataRow.id, dataRow.name, dataRow.address, dataRow.email, dataRow.phone);
             break;
         case 'dog':
             fDataRow = new _dog2.default(dataRow.id, dataRow.name, dataRow.colour, dataRow.age, dataRow.breed, dataRow.ownerId);
@@ -47,9 +50,15 @@ var formatDataRow = function formatDataRow(dataRow) {
 
     }
 
+    // verify it is finally converted to json format
     return fDataRow.toJSON();
 };
 
+/**
+ * formats models data and creates instances according to its type
+ * this could be extended to allow for sorting and different kinds of formatting
+ * @param {array} modelDataArray - an array of models
+ */
 var formatData = function formatData(modelDataArray) {
 
     var formatedDataArray = [];

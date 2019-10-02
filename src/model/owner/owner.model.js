@@ -1,18 +1,24 @@
+/**
+ * Class representing Owner Model
+ */
 export default class Owner {
-    constructor(id, name, address, email, phone = null, pets = null) {
+    constructor(id, name, address, email, phone = null) {
         this.type = 'OWNER';
         this.id = id;
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.email = email;
-        this.pets = pets;
     }
 
     get Type() {
         return this.type;
     }
 
+
+    /**
+     * Converting Object to JSON
+     */
     toJSON() {
         return {
             type: this.type,
@@ -20,8 +26,7 @@ export default class Owner {
             name: this.name,
             address: this.address,
             phone: this.phone,
-            email: this.email,
-            pets: this.pets
+            email: this.email
         };
     }
 

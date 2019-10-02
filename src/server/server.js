@@ -10,19 +10,28 @@ import schema from '../schema/schema';
 
 const app = express();
 
+// log all requests to access.log
 app.use(morgan('common', {
     stream: accessLogStream
 }));
 
+// enable all CORS Requests
 app.use(cors());
+
+// help in secuirty
 app.use(helmet());
 
+// handle error requests
 app.use((err, req, res, next) => {
     logger.error("REQUEST ERROR", err);
     res.status(500).send("REQUEST ERROR");
 });
 
+
+// initiate a new apollo server with schema definitions and resolvers
+
 const server = new ApolloServer({ schema });
+// it defaults to path '/graphql'
 server.applyMiddleware({ app });
 
 

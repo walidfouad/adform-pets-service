@@ -35,19 +35,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var app = (0, _express2.default)();
 
+// log all requests to access.log
 app.use((0, _morgan2.default)('common', {
     stream: _logger.accessLogStream
 }));
 
+// enable all CORS Requests
 app.use((0, _cors2.default)());
+
+// help in secuirty
 app.use((0, _helmet2.default)());
 
+// handle error requests
 app.use(function (err, req, res, next) {
     _logger2.default.error("REQUEST ERROR", err);
     res.status(500).send("REQUEST ERROR");
 });
 
+// initiate a new apollo server with schema definitions and resolvers
+
 var server = new _apolloServerExpress.ApolloServer({ schema: _schema2.default });
+// it defaults to path '/graphql'
 server.applyMiddleware({ app: app });
 
 exports.server = server;
